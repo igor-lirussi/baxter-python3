@@ -29,9 +29,10 @@ everything should be already installed if you are running in the robot, for runn
 
 ## Run
 ```
-import baxter-python3.baxter
-import rospy
+import importlib
+baxter=importlib.import_module("baxter-python3.baxter")
 
+import rospy
 rospy.init_node("example")
 rospy.sleep(2.0)
 robot = baxter.BaxterRobot(arm="left")
@@ -53,7 +54,9 @@ This code repo, if imported in your project, allows you to give different facial
 
 Useful to warn the people around of the movements that are about to happen, looking at the place before moving the joints. 
 ```
-import baxter-python3.faces
+
+import importlib
+importlib.import_module("baxter-python3.faces")
 
 #set looking direction
 _set_look(robot, "down")
