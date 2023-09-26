@@ -114,7 +114,11 @@ navbar:
     title   :  # Title in navbar
     url     :  # default["url/baseurl"]
     img     :  # An small image, try 30x30px
-  nav:
+  nav:  
+  - title   : Home # Label
+    url     : https://igor-lirussi.github.io/baxter-python3/ # url
+  - title   : Privacy Policy # Label
+    url     : https://igor-lirussi.github.io/baxter-python3/BAXTER_TUTORIAL # url
 
 #Social links to be placed on your site footer
 footer:
@@ -124,7 +128,7 @@ footer:
       url   : https://github.com/igor-lirussi/baxter-python3 # A link or email: https://twitter.com/jack, mail@example.com
     - label : Mail #Label
       icon  : fa-solid fa-envelope # Fontawesome 5 icon
-      url   : mailto:buviar@boun.edu.tr # A link or email: https://twitter.com/jack, mail@example.com
+      url   : mailto: # A link or email: https://twitter.com/jack, mail@example.com
   copyright: # default is © <year> <name>
 
 # C. Theme Settings

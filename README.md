@@ -1,7 +1,8 @@
 # Baxter Python 3
 **Code Baxter with Python3!**
 ## Description 
-Useful port of baxter interface to control your Baxter with Python 3
+Useful port of baxter interface to control your Baxter with Python 3.
+If you need an introductive tutorial on baxter checkout [this Baxter introduction](https://igor-lirussi.github.io/baxter-python3/BAXTER_TUTORIAL)
 
 
 ### Topics:
@@ -69,6 +70,7 @@ _set_face(robot, "left_down")
 ## Authors
 * **Igor Lirussi** @ BOUN Boğaziçi University - CoLoRs (Cognitive Learning and Robotics) Lab
 * **Alper Ahmetoglu** @ BOUN Boğaziçi University - CoLoRs (Cognitive Learning and Robotics) Lab
+* **Deniz Bilge Akkoç** @ BOUN Boğaziçi University - CoLoRs (Cognitive Learning and Robotics) Lab
 
 ## Acknowledgments
 *   All the people that contributed with suggestions and tips.
