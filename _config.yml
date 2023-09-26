@@ -117,7 +117,7 @@ navbar:
   nav:  
   - title   : Home # Label
     url     : https://igor-lirussi.github.io/baxter-python3/ # url
-  - title   : Privacy Policy # Label
+  - title   : Baxter Tutorial # Label
     url     : https://igor-lirussi.github.io/baxter-python3/BAXTER_TUTORIAL # url
 
 #Social links to be placed on your site footer
@@ -126,9 +126,6 @@ footer:
     - label : Github #Label
       icon  : fab fa-github # Fontawesome 5 icon
       url   : https://github.com/igor-lirussi/baxter-python3 # A link or email: https://twitter.com/jack, mail@example.com
-    - label : Mail #Label
-      icon  : fa-solid fa-envelope # Fontawesome 5 icon
-      url   : mailto: # A link or email: https://twitter.com/jack, mail@example.com
   copyright: # default is © <year> <name>
 
 # C. Theme Settings
