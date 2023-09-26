@@ -1,7 +1,7 @@
 # Baxter Python 3
 **Code Baxter with Python3!**
 ## Description 
-Useful port to control your Baxter with Python 3
+Useful port of baxter interface to control your Baxter with Python 3
 
 
 ### Topics:
@@ -18,10 +18,13 @@ everything should be already installed if you are running in the robot, for runn
 - rospy
 - opencv
 
-## Install 
+## Install in your repository
 *   add this repo in your repo: ```git submodule add git@github.com:igor-lirussi/baxter-python3.git```
+*   if you want to check for updates of the submodule: ```git submodule update --remote```
+
 *	remember to tell users to clone your repo with --recurse-submodules: ```git clone --recurse-submodules https://github.com/your_name/your_repo```
 *  	if a user clones without --recurse-submodules will find the empty folder, download the submodules with ```git submodule init``` and ```git submodule update```
+
 
 ## Run
 ```
