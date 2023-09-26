@@ -23,7 +23,6 @@ rospy.sleep(4.0)
 string = "Calibrated: {} Ready: {} Moving: {} Gripping: {}".format(robot._gripper_state.calibrated, robot._gripper_state.ready, robot._gripper_state.moving, robot._gripper_state.gripping)
 print(string)
 
-
 robot.gripper_prepare_to_grip()
 rospy.sleep(4.0)
 string = "Calibrated: {} Ready: {} Moving: {} Gripping: {}".format(robot._gripper_state.calibrated, robot._gripper_state.ready, robot._gripper_state.moving, robot._gripper_state.gripping)

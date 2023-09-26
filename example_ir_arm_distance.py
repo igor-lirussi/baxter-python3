@@ -6,6 +6,7 @@ import numpy as np
 from baxter_core_msgs.msg import EndpointState
 from sensor_msgs.msg import Range
 
+# prints distance of infrared sensor in hand
 rospy.init_node("testing")
 rospy.sleep(2.0)
 robot = baxter.BaxterRobot(rate=100, arm="left")
