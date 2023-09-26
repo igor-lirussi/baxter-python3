@@ -172,9 +172,9 @@ defaults:
     values:
       layout: landingpage
       og_image: "./img/result.jpg" #Social preview
-      excerpt: "Code to give Baxter robot different facial expressions" #Social preview
+      excerpt: "Interface to code Baxter in Python 3" #Social preview
       title: "Baxter Python 3"
-      subtitle: "Code to give Baxter robot different facial expressions"
+      subtitle: "Interface to code Baxter in Python 3"
       header_type: "splash"
       header_img: "./img/result.jpg"
       show_sociallinks: true
