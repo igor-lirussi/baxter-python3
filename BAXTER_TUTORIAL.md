@@ -15,6 +15,9 @@ You can connect to the CMPE network using the blue Ethernet cables with the setu
 ![Figure 2](./img/fig2.jpg)
 
 ## Running Code:
+
+> Please check no objects (like tables, chairs,...) are too close to the robot and it's arms when you make it move, and always keep the red emergency stop button close to you to deactivate the robot if it's about to impact something!   
+
 ### On Baxter computer
 Before running any code, it is necessary to source the baxter.sh and run the enable_robot code ```source ~/ros_ws/devel/setup.sh``` ```conda activate ros_env``` . 
 If you forget to run the enable_robot code, the robot will not move even if the code appears to be running.
@@ -22,8 +25,8 @@ On Baxter's computer, you will find various codes for users' convenience, such a
 
 ![Figure 3](./img/fig3.jpg)
 
-To run the example codes on Baxter's internal computer: Default codes are also available if you navigate to the baxter_examples directory. For the exact location, refer to Figure 4. Here, you can execute your desired code using either ```./file_name.py``` or ```python file_name.py``` commands. It's important to note that these codes are written in Python 2.7, and Baxter's computer uses Python 2.7 as well.
-You can send your python files along with the baxter-pyhton3 interface to Baxter computer using ssh.
+To run the example codes on Baxter's internal computer: Default codes are also available if you navigate to the baxter_examples directory. For the exact location, refer to Figure 4. Here, you can execute your desired code using either ```./file_name.py``` or ```python file_name.py``` commands. It's important to note that these codes are written in Python 2.7, and Baxter's computer uses Python 2.7 as well. That's why if you wanna code with Python3 you should use this baxter-python3 repository and include it in your projext. 
+You can send your python files along with the baxter-pyhton3 interface to Baxter computer using ssh or scp. Remember that Baxter computer has limited computational ability, so if your projext it's complex you should run the code in your computer and pass only the commands to Baxter.
 
 ![Figure 4](./img/fig4.jpg)
 
@@ -55,6 +58,6 @@ Please note that the provided instructions assume basic familiarity with the ROS
 ## Shortcuts
 ```
 ctrl+alt+f1 : open terminal 
-ctrl+alt+f3 : open ip address details
+ctrl+alt+f3 : open ip address details (to see the robot ip)
 ctrl+alt+f4 : normal view
 ```
