@@ -65,13 +65,13 @@ Useful to warn the people around of the movements that are about to happen, look
 ```
 
 import importlib
-importlib.import_module("baxter-python3.faces")
+face=importlib.import_module("baxter-python3.faces")
 
 #set looking direction
-_set_look(robot, "down")
+face._set_look(robot, "down")
 
 #or display a face
-_set_face(robot, "left_down")
+face._set_face(robot, "left_down")
 ```
 
 {% include_cached snippets/masonry.html internal="gallery" %}
