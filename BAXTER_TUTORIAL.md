@@ -7,7 +7,7 @@ To power on Baxter, press the button located on the back left side, as shown in 
 
 ![Figure 1](./img/fig1.jpg)
 
-After powering on, you can open the terminal using the ```ctrl+alt+f1``` shortcut. When the login screen appears, use the username: ```ruser``` and password: ```rethink``` to log in. 
+After powering on, you can open the terminal using the ```ctrl+alt+f1``` shortcut. When the login screen appears, use the username: ```ruser``` and password (ask someone in the lab for it) to log in. 
 You can perform this action either by connecting a keyboard to Baxter's computer or by connecting via SSH from another computer ssh ```ruser@79.123.176.47``` , as shown in Figure 2. Use ```ctrl+alt+f3``` shortcut on the robot to get the ip address.
 _To connect via SSH, make sure you are on the same network as Baxter_. 
 You can connect to the CMPE network using the blue Ethernet cables with the setup shown in Figure 2. 
