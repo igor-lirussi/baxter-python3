@@ -21,4 +21,4 @@ def _set_look(robot, look_direction="down", activated=True, path="./baxter-pytho
     sets the robot looking direction to a specific one (down, up, left, right, frontal, left_up,...)
     activated is a default true variable that can be passed with a global variable in your code if you want to deactivate the face change all together
     """
-    _set_face(robot=robot,look_direction="look_"+look_direction,activated=activated,path=path)
+    _set_face(robot=robot,face="look_"+look_direction,activated=activated,path=path)
