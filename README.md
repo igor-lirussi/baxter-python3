@@ -26,6 +26,7 @@ everything should be already installed if you are running in the robot, for runn
 *	remember to tell users to clone your repo with --recurse-submodules: ```git clone --recurse-submodules https://github.com/your_name/your_repo```
 *  	if a user clones without --recurse-submodules will find the empty folder, download the submodules with ```git submodule init``` and ```git submodule update```
 
+[For example, this is a repo that uses this module](https://github.com/igor-lirussi/Baxter-Robot-ObjDet)
 
 ## Run
 ```
