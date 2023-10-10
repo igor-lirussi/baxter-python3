@@ -6,8 +6,6 @@ import baxter
 import cv2
 import numpy as np
 import csv  
-from baxter_interface import Gripper
-from baxter_interface import CHECK_VERSION
 
 
 parser = argparse.ArgumentParser()
@@ -34,12 +32,10 @@ rospy.sleep(2.0)
 robot.set_robot_state(True)
 
 print('Initialize gripper')
-gripper = Gripper(SIDE, CHECK_VERSION)
-if gripper.error():
-    gripper.reset()
-if (not gripper.calibrated() and
-    gripper.type() != 'custom'):
-    gripper.calibrate()
+robot.gripper_calibrate()
+rospy.sleep(4.0)
+string = "Calibrated: {} Ready: {} Moving: {} Gripping: {}".format(robot._gripper_state.calibrated, robot._gripper_state.ready, robot._gripper_state.moving, robot._gripper_state.gripping)
+print(string)
 
 print('Get robot pose')
 p = robot._endpoint_state.pose.position
@@ -56,9 +52,9 @@ print("Press Show Button on Arm (lower one than wheel) to exit.\n You can record
 while not rospy.is_shutdown() and run:
     # Look for gripper button presses
     if robot._hand_lower_button_state.state:
-        gripper.open()
+        robot.gripper_grip()
     if robot._hand_upper_button_state.state:
-        gripper.close()
+        robot.gripper_release()
     #pass between recording state and not recording
     if record:
         img = np.zeros((int(HEIGHT), int(WIDTH), 3), dtype=np.uint8) #black base image
