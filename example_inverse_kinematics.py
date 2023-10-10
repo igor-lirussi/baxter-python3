@@ -3,7 +3,6 @@ import rospy
 import baxter
 import cv2
 import numpy as np
-from baxter_core_msgs.msg import EndpointState
 
 rospy.init_node("testing")
 rospy.sleep(2.0)
@@ -13,9 +12,8 @@ rospy.sleep(2.0)
 
 robot.set_robot_state(True)
 #get position of hand
-msg = rospy.wait_for_message("/robot/limb/left/endpoint_state", EndpointState)
-p = msg.pose.position
-q = msg.pose.orientation
+p = robot._endpoint_state.pose.position
+q = robot._endpoint_state.pose.orientation
 print("Position:")
 print(p)
 print("Orientation:")

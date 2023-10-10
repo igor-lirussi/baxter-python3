@@ -3,7 +3,7 @@ from copy import deepcopy
 import rospy
 import cv_bridge
 from baxter_core_msgs.msg import JointCommand, EndpointState, CameraSettings, CameraControl
-from baxter_core_msgs.msg import EndEffectorCommand, EndEffectorProperties, EndEffectorState
+from baxter_core_msgs.msg import EndEffectorCommand, EndEffectorProperties, EndEffectorState, EndpointState, NavigatorState, DigitalIOState
 from baxter_core_msgs.srv import OpenCamera, CloseCamera, SolvePositionIK, SolvePositionIKRequest
 from std_msgs.msg import Bool, Header
 from geometry_msgs.msg import Pose, Point, Quaternion, PoseStamped
@@ -28,30 +28,48 @@ class BaxterRobot:
         print("IK service loaded.")
 
         #robot
-        self._robot_state = rospy.Publisher("/robot/set_super_enable", Bool, queue_size=10)
+        self._pub_robot_state = rospy.Publisher("/robot/set_super_enable", Bool, queue_size=10)
         #display
         self._pub_display = rospy.Publisher("/robot/xdisplay", Image, latch=True, queue_size=1)
 
+        #navigators buttons on arm
+        self._sub_navigator_state = rospy.Subscriber("/robot/navigators/"+arm+"_navigator/state", NavigatorState, self._fill_navigator_state) 
+        self._navigator_state = NavigatorState()
+
         #joints
         self._pub_joint_cmd = rospy.Publisher("/robot/limb/"+arm+"/joint_command", JointCommand, queue_size=1)
-        self._joint_state_sub = rospy.Subscriber("/robot/joint_states", JointState, self._fill_joint_state)
+        self._sub_joint_state = rospy.Subscriber("/robot/joint_states", JointState, self._fill_joint_state)
         self._joint_angle = {}
         self._joint_velocity = {}
         self._joint_effort = {}
-        #camera
-        self._cam_image_sub = rospy.Subscriber("/cameras/"+arm+"_hand_camera/image", Image, self._fill_cam_image)
+
+        #end effector (hand) state
+        self._sub_endpoint_state = rospy.Subscriber("/robot/limb/"+arm+"/endpoint_state", EndpointState, self._fill_endpoint_state)
+        self._endpoint_state = EndpointState()
+
+        #hand upper/lower button
+        self._sub_hand_upper_button_state = rospy.Subscriber("/robot/digital_io/"+arm+"_upper_button/state", DigitalIOState, self._fill_hand_upper_button_state)
+        self._hand_upper_button_state = DigitalIOState()
+        self._sub_hand_lower_button_state = rospy.Subscriber("/robot/digital_io/"+arm+"_lower_button/state", DigitalIOState, self._fill_hand_lower_button_state)
+        self._hand_lower_button_state = DigitalIOState()
+
+        #camera hand
+        self._sub_cam_image = rospy.Subscriber("/cameras/"+arm+"_hand_camera/image", Image, self._fill_cam_image)
         self._cam_image = Image()
         
-        #range sonar arm
+        #range sonar hand
         self._sub_ir_range = rospy.Subscriber("/robot/range/"+arm+"_hand_range/state", Range, self._fill_ir_range)
         self._ir_range = Range()
 
-        #gripper
+        #gripper hand
         self._pub_gripper = rospy.Publisher("/robot/end_effector/"+arm+"_gripper/command", EndEffectorCommand, queue_size=10)
 
         self._sub_gripper_state = rospy.Subscriber("/robot/end_effector/"+arm+"_gripper/state", EndEffectorState, self._fill_gripper_state)
         self._gripper_state = EndEffectorState()
 
+
+    def _fill_navigator_state(self, msg):
+        self._navigator_state = msg
 
     def joint_angle(self):
         return deepcopy(self._joint_angle)
@@ -59,7 +77,7 @@ class BaxterRobot:
     def set_robot_state(self, state):
         msg = Bool()
         msg.data = state
-        self._robot_state.publish(msg)
+        self._pub_robot_state.publish(msg)
 
     def set_cartesian_position(self, position, orientation):
         hdr = Header(stamp=rospy.Time.now(), frame_id="base")
@@ -149,6 +167,15 @@ class BaxterRobot:
                 self._joint_angle[name] = msg.position[idx]
                 self._joint_velocity[name] = msg.velocity[idx]
                 self._joint_effort[name] = msg.effort[idx]
+
+    def _fill_endpoint_state(self, msg):
+        self._endpoint_state = msg
+
+    def _fill_hand_upper_button_state(self, msg):
+        self._hand_upper_button_state = msg
+
+    def _fill_hand_lower_button_state(self, msg):
+        self._hand_lower_button_state = msg
 
     def _fill_cam_image(self, msg):
         self._cam_image = msg

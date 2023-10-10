@@ -5,7 +5,6 @@ import rospy
 import baxter
 import cv2
 import numpy as np
-from baxter_core_msgs.msg import DigitalIOState, EndpointState
 
 directory="./imgs_saved"
 interval_sec=3
@@ -36,9 +35,8 @@ print(robot.move_to_zero())
 print(robot.move_to_joint_position({"left_s0": -PI/4}, timeout=10))
 data = np.array(list(robot._cam_image.data), dtype=np.uint8)
 
-msg = rospy.wait_for_message("/robot/limb/left/endpoint_state", EndpointState)
-p = msg.pose.position
-q = msg.pose.orientation
+p = robot._endpoint_state.pose.position
+q = robot._endpoint_state.pose.orientation
 print("Position:")
 print(p)
 print("Orientation:")
@@ -53,8 +51,7 @@ while not rospy.is_shutdown():
 	#calculate time passed from last picture
 	time_passed=time.time()-LAST_PIC_TIME
 	#check button pressed
-	msg = rospy.wait_for_message("/robot/digital_io/left_lower_button/state", DigitalIOState)
-	button_pressed = msg.state
+	button_pressed = robot._hand_upper_button_state.state
 	#if button pressed and time passed > interval (not to save image continuously)
 	if button_pressed and time_passed > interval_sec:
 		img_name= "capture-{}.png".format(datetime.now().strftime("%d_%m_%Y-%H_%M_%S"))

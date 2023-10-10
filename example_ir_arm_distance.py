@@ -3,8 +3,6 @@ import rospy
 import baxter
 import cv2
 import numpy as np
-from baxter_core_msgs.msg import EndpointState
-from sensor_msgs.msg import Range
 
 # prints distance of infrared sensor in hand
 rospy.init_node("testing")
@@ -13,15 +11,22 @@ robot = baxter.BaxterRobot(rate=100, arm="left")
 rospy.sleep(2.0)
 robot.set_robot_state(True)
 
-msg = rospy.wait_for_message("/robot/limb/left/endpoint_state", EndpointState)
-p = msg.pose.position
-q = msg.pose.orientation
+
+#get position of hand
+p = robot._endpoint_state.pose.position
+q = robot._endpoint_state.pose.orientation
+#instead of the blocking
+#from baxter_core_msgs.msg import EndpointState
+#msg = rospy.wait_for_message("/robot/limb/left/endpoint_state", EndpointState)
+#p = msg.pose.position
+#q = msg.pose.orientation
 print("Position:")
 print(p)
 print("Orientation:")
 print(q.z)
 
 while not rospy.is_shutdown():
+	#from sensor_msgs.msg import Range
 	#msg = rospy.wait_for_message("/robot/range/left_hand_range/state", Range)
 	#string = "Dist: {:0.2f}".format(msg.range)
 	string = "Dist: {}".format(robot._ir_range.range)
