@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--arm', type=str, default='left', help='Arm, left or right')
 parser.add_argument('-r', '--record_rate', type=int, default='100', help='milliseconds after which another point is recorded, remember the update of robot is 100 Hz, so no lower than 10ms or values will be duplicated')
 parser.add_argument('-f', '--file', type=str, default='data_record', help='the file name to record to')
+parser.add_argument('--joints', action='store_true', help='Saves also the 7 joints positions in the last 7 column (joint space)')
 args = parser.parse_args()
 
 SIDE = args.arm
@@ -65,8 +66,13 @@ while not rospy.is_shutdown() and run:
             LAST_TIME=NOW
             #add position and gripper data
             p = robot._endpoint_state.pose.position
-            q = robot._endpoint_state.pose.orientation            
-            data.append([NOW-time_start_record, p.x, p.y, p.z, q.x, q.y, q.z, q.w, robot._gripper_state.position, robot._gripper_state.force])  # Append data to the list
+            q = robot._endpoint_state.pose.orientation
+            s = robot._endpoint_state.header.stamp
+            row = [NOW-time_start_record, s.secs, s.nsecs, p.x, p.y, p.z, q.x, q.y, q.z, q.w, robot._gripper_state.position, robot._gripper_state.force]
+            if args.joints: #if joints are recorded add in the end
+                j_pos=robot._joint_angle
+                row += [ j_pos[SIDE+"_e0"],j_pos[SIDE+"_e1"],j_pos[SIDE+"_s0"],j_pos[SIDE+"_s1"],j_pos[SIDE+"_w0"],j_pos[SIDE+"_w1"],j_pos[SIDE+"_w2"] ]
+            data.append(row)  # Append data to the list
             print('.', end='')
         #check button pressed CANCEL_BUTTON
         if robot._navigator_state.buttons[1] == True:
@@ -77,7 +83,10 @@ while not rospy.is_shutdown() and run:
             fullfilename = f"{FILENAME}_{time.strftime('%Y-%m-%d_%H-%M-%S')}.csv"
             with open(fullfilename, mode='w', newline='') as file:
                 writer = csv.writer(file)
-                writer.writerow(["Time", "________p_x________", "________p_y________", "________p_z________", "________q_x________", "________q_y________", "________q_z________", "________q_w________", "gripper_position", "gripper_force"])  # Write header
+                header_row=["Time","ROS secs","ROS nsecs", "________p_x________", "________p_y________", "________p_z________", "________q_x________", "________q_y________", "________q_z________", "________q_w________", "gripper_position", "gripper_force"]
+                if args.joints: #if joints are recorded add in the end
+                    header_row += [ SIDE+"_e0", SIDE+"_e1", SIDE+"_s0", SIDE+"_s1", SIDE+"_w0", SIDE+"_w1", SIDE+"_w2" ]
+                writer.writerow(header_row)  # Write header
                 writer.writerows(data)  # Write data to the CSV file
             data = []  # Clear the data list
     else:
