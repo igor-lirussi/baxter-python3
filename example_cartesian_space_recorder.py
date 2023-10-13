@@ -11,7 +11,7 @@ import csv
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--arm', type=str, default='left', help='Arm, left or right')
 parser.add_argument('-r', '--record_rate', type=int, default='100', help='milliseconds after which another point is recorded, remember the update of robot is 100 Hz, so no lower than 10ms or values will be duplicated')
-parser.add_argument('-f', '--file', type=str, default='data_record', help='the file name to record to')
+parser.add_argument('-f', '--file', type=str, default='data_record', help='the file name to record to or path/filename')
 parser.add_argument('--joints', action='store_true', help='Saves also the 7 joints positions in the last 7 column (joint space)')
 args = parser.parse_args()
 

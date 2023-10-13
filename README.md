@@ -60,12 +60,13 @@ check the examples for more.
 
 ### Examples
 Some examples are available in the folder to demonstrate some capabilities:
-- example_moving for moving the joints
-- example_inverse kinematics for moving the joints given a target point
-- example_grippers to use the grippers
-- example_ir_arm_distance for getting the infrared distance between grippen and object
-- example_take_pic to use the cameras in the hands and to take pictures with the button (useful to create a dataset of images of objects you are working on).
-- robotStateFalse to put both arms in normal position and deactivate the motors
+- ```robotStateFalse.py``` to put both arms in normal position and deactivate the motors
+- ```example_moving.py``` for moving the joints
+- ```example_inverse_kinematics.py``` for moving the joints given a target point
+- ```example_grippers.py``` to use the grippers
+- ```example_ir_arm_distance.py``` for getting the infrared distance between grippen and object
+- ```example_take_pic.py``` for getting the camera video in the hands and to take pictures with the button (useful to create a dataset of images of objects you are working on).
+- ```example_cartesian_space_recorder.py``` to record trajectories in cartesian (task-space) and also joints poistion (joint space). Visualize with ```visualizer_cartesian_trajectories```
 
 ## Useful Resources & Extra
 ### Face expressions
@@ -73,7 +74,6 @@ This code repo, if imported in your project, allows you to give different facial
 
 Useful to warn the people around of the movements that are about to happen, looking at the place before moving the joints. 
 ```
-
 import importlib
 face=importlib.import_module("baxter-python3.faces")
 
