@@ -9,16 +9,16 @@ import csv
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-a', '--arm', type=str, default='left', help='Arm, left or right')
-parser.add_argument('-r', '--record_rate', type=int, default='100', help='milliseconds after which another point is recorded, remember the update of robot is 100 Hz, so no lower than 10ms or values will be duplicated')
-parser.add_argument('-f', '--file', type=str, default='data_record', help='the file name to record to or path/filename')
-parser.add_argument('--joints', action='store_true', help='Saves also the 7 joints positions in the last 7 column (joint space)')
+parser.add_argument('-a', '--arm', type=str, default='left', help='Arm: left or right (default: left)')
+parser.add_argument('-r', '--record_rate', type=int, default='100', help='milliseconds (default: 100ms=10Hz) after which another point is recorded, remember the update of robot is 100 Hz, so no lower than 10ms or values may be duplicated')
+parser.add_argument('-f', '--file', type=str, default='data_record', help='the file name to record to or path/filename, do not put the extension, they are gonna be saved in .csv')
+parser.add_argument('-j', '--joints', action='store_true', help='Saves also the 7 joints positions in the last 7 column (joint space)')
 args = parser.parse_args()
 
 SIDE = args.arm
 RECORDRATE=args.record_rate
 FILENAME=args.file
-
+print("Arm "+SIDE+" chosen, change it with -a option")
 
 LAST_TIME=int(time.time_ns() / 1_000_000)
 WIDTH = 960
@@ -38,18 +38,18 @@ rospy.sleep(4.0)
 string = "Calibrated: {} Ready: {} Moving: {} Gripping: {}".format(robot._gripper_state.calibrated, robot._gripper_state.ready, robot._gripper_state.moving, robot._gripper_state.gripping)
 print(string)
 
-print('Get robot pose')
+print('Get robot pose:')
 p = robot._endpoint_state.pose.position
-print('->Current Position    x:%.2f y:%.2f z:%.2f'%(p.x,p.y,p.z))
+print('Current Position    x:%.2f y:%.2f z:%.2f'%(p.x,p.y,p.z))
 q = robot._endpoint_state.pose.orientation
-print('->Current Orientation x:%.2f y:%.2f z:%.2f w:%.2f'%(q.x,q.y,q.z,q.w))
+print('Current Orientation x:%.2f y:%.2f z:%.2f w:%.2f'%(q.x,q.y,q.z,q.w))
 
 run=True
 record=False
 data = []
-print("\nPress Wheel Button on Arm to start recording")
-print("Press Back Button on Arm to stop recording")
-print("Press Show Button on Arm (lower one than wheel) to exit.\n You can record now!\n")
+print("\n -> Press Wheel Button on Arm to start recording")
+print(" -> Press Back Button on Arm to stop recording")
+print(" -> Press Show Button on Arm (lower one than wheel) to exit.\n You can record now!\n")
 while not rospy.is_shutdown() and run:
     # Look for gripper button presses
     if robot._hand_lower_button_state.state:
