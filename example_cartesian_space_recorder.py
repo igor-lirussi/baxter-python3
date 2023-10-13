@@ -107,5 +107,5 @@ while not rospy.is_shutdown() and run:
         cv2.putText(img, "Exit", (300,300), cv2.FONT_HERSHEY_SIMPLEX, 1.7, (255,0,0), 3)
 
     robot._set_display_data(cv2.resize(img, (1024,600)))
-
+sleep(1)
     
