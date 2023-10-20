@@ -3,10 +3,7 @@ import argparse
 import rospy
 import baxter
 import numpy as np
-from baxter_core_msgs.msg import EndpointState
 from pynput.keyboard import Key, Listener
-from baxter_interface import Gripper
-from baxter_interface import CHECK_VERSION
 
 global desired_position
 global desired_orientation
