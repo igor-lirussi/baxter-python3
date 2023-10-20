@@ -63,6 +63,7 @@ Some examples are available in the folder to demonstrate some capabilities:
 - ```robotStateFalse.py``` to put both arms in normal position and deactivate the motors
 - ```example_moving.py``` for moving the joints
 - ```example_inverse_kinematics.py``` for moving the joints given a target point
+- ```example_joystick_keyboard.py``` for moving the robot with keyboard, given a target point
 - ```example_grippers.py``` to use the grippers
 - ```example_ir_arm_distance.py``` for getting the infrared distance between grippen and object
 - ```example_take_pic.py``` for getting the camera video in the hands and to take pictures with the button (useful to create a dataset of images of objects you are working on).
