@@ -1,11 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import argparse 
 
 import os
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-f', '--filepath', type=str, default='.', help='the folder in which look for trajectory files')
+parser.add_argument('-f', '--filepath', type=str, default='.', help='the folder (default .) in which look for trajectory files')
 args = parser.parse_args()
 
 folder_path = args.filepath
