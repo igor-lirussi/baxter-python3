@@ -14,7 +14,7 @@ from sensor_msgs.msg import Range
 class BaxterRobot:
 
     def __init__(self, arm, rate=100):
-        self.rate = rospy.Rate(100)
+        self.rate = rospy.Rate(rate)
 
         self.name = arm
         self._cartesian_pose = {}
@@ -79,7 +79,7 @@ class BaxterRobot:
         msg.data = state
         self._pub_robot_state.publish(msg)
 
-    def set_cartesian_position(self, position, orientation):
+    def set_cartesian_position(self, position, orientation, override_current_movement=False):
         hdr = Header(stamp=rospy.Time.now(), frame_id="base")
         msg = PoseStamped(
             header=hdr,
@@ -101,19 +101,21 @@ class BaxterRobot:
         ikreq.pose_stamp.append(msg)
         resp = self.iksvc(ikreq)
         if resp.isValid[0]:
-            self.move_to_joint_position(
-                {
-                    self.name+"_s0": resp.joints[0].position[0],
-                    self.name+"_s1": resp.joints[0].position[1],
-                    self.name+"_e0": resp.joints[0].position[2],
-                    self.name+"_e1": resp.joints[0].position[3],
-                    self.name+"_w0": resp.joints[0].position[4],
-                    self.name+"_w1": resp.joints[0].position[5],
-                    self.name+"_w2": resp.joints[0].position[6],
-                }
-            )
+            positions_payload={
+                self.name+"_s0": resp.joints[0].position[0],
+                self.name+"_s1": resp.joints[0].position[1],
+                self.name+"_e0": resp.joints[0].position[2],
+                self.name+"_e1": resp.joints[0].position[3],
+                self.name+"_w0": resp.joints[0].position[4],
+                self.name+"_w1": resp.joints[0].position[5],
+                self.name+"_w2": resp.joints[0].position[6],
+            }
+            if override_current_movement:
+                self.set_joint_position(positions_payload)
+            else:
+                self.move_to_joint_position(positions_payload)
         else:
-            print("[Error] position invalid!")
+            print("[Error] position invalid! "+str(resp))
         return resp.isValid[0]
 
     def set_joint_position(self, positions):

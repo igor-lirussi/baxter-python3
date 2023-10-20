@@ -15,7 +15,7 @@ robotL.set_robot_state(True)
 #print(robotL.move_to_neutral())
 #print(robotR.move_to_neutral())
 
-
+# parallel movements of both arms
 class myThread (threading.Thread):
    def __init__(self, threadID, name, robot):
       threading.Thread.__init__(self)

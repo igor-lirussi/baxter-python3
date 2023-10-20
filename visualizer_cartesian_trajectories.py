@@ -2,7 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import os
-folder_path = '.'
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-f', '--filepath', type=str, default='.', help='the folder in which look for trajectory files')
+args = parser.parse_args()
+
+folder_path = args.filepath
+
 arrays = []
 for filename in os.listdir(folder_path):
     if filename.endswith('.csv'):
