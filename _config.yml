@@ -119,6 +119,8 @@ navbar:
     url     : https://igor-lirussi.github.io/baxter-python3/ # url
   - title   : Baxter Tutorial # Label
     url     : https://igor-lirussi.github.io/baxter-python3/BAXTER_TUTORIAL # url
+  - title   : Baxter Tutorial Trajectories # Label
+    url     : https://igor-lirussi.github.io/baxter-python3/BAXTER_TUTORIAL_TRAJECTORIES # url
 
 #Social links to be placed on your site footer
 footer:

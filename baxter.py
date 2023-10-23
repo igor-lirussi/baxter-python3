@@ -9,6 +9,7 @@ from std_msgs.msg import Bool, Header
 from geometry_msgs.msg import Pose, Point, Quaternion, PoseStamped
 from sensor_msgs.msg import JointState, Image
 from sensor_msgs.msg import Range
+import json
 
 
 class BaxterRobot:
@@ -281,10 +282,12 @@ class BaxterRobot:
         _command_end_effector.command = EndEffectorCommand.CMD_RELEASE
         self._pub_gripper.publish(_command_end_effector)
 
-    def gripper_go(self):
+    def gripper_go(self, position=0):
+        arguments = json.dumps({"position":position})
         _command_end_effector = EndEffectorCommand()
         _command_end_effector.id =  self._gripper_state.id
         _command_end_effector.command = EndEffectorCommand.CMD_GO
+        _command_end_effector.args = arguments
         self._pub_gripper.publish(_command_end_effector)
 
     def gripper_stop(self):

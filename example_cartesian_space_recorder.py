@@ -11,13 +11,15 @@ import csv
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--arm', type=str, default='left', help='Arm: left or right (default: left)')
 parser.add_argument('-r', '--record_rate', type=int, default='100', help='milliseconds (default: 100ms=10Hz) after which another point is recorded, remember the update of robot is 100 Hz, so no lower than 10ms or values may be duplicated')
-parser.add_argument('-f', '--file', type=str, default='data_record', help='the file name to record to or path/filename, (default: data_record) do not put the extension, they are gonna be saved in .csv')
+parser.add_argument('-f', '--file', type=str, default='data_record', help='the file name to record to or path/to/filename, (default: data_record) You can also omit the extension, they are gonna be saved anyway in .csv')
 parser.add_argument('-j', '--joints', action='store_true', help='Saves also the 7 joints positions in the last 7 column (joint space) (add this argument to activate)')
 args = parser.parse_args()
 
 SIDE = args.arm
 RECORDRATE=args.record_rate
 FILENAME=args.file
+if FILENAME.endswith('.csv'):
+    FILENAME = FILENAME[:-4]
 print("Arm "+SIDE+" chosen, change it with -a option")
 
 LAST_TIME=int(time.time_ns() / 1_000_000)
@@ -71,7 +73,7 @@ while not rospy.is_shutdown() and run:
             row = [NOW-time_start_record, s.secs, s.nsecs, p.x, p.y, p.z, q.x, q.y, q.z, q.w, robot._gripper_state.position, robot._gripper_state.force]
             if args.joints: #if joints are recorded add in the end
                 j_pos=robot._joint_angle
-                row += [ j_pos[SIDE+"_e0"],j_pos[SIDE+"_e1"],j_pos[SIDE+"_s0"],j_pos[SIDE+"_s1"],j_pos[SIDE+"_w0"],j_pos[SIDE+"_w1"],j_pos[SIDE+"_w2"] ]
+                row += [ j_pos[SIDE+"_s0"],j_pos[SIDE+"_s1"],j_pos[SIDE+"_e0"],j_pos[SIDE+"_e1"],j_pos[SIDE+"_w0"],j_pos[SIDE+"_w1"],j_pos[SIDE+"_w2"] ]
             data.append(row)  # Append data to the list
             print('.', end='')
         #check button pressed CANCEL_BUTTON
@@ -85,7 +87,7 @@ while not rospy.is_shutdown() and run:
                 writer = csv.writer(file)
                 header_row=["Time","ROS secs","ROS nsecs", "________p_x________", "________p_y________", "________p_z________", "________q_x________", "________q_y________", "________q_z________", "________q_w________", "gripper_position", "gripper_force"]
                 if args.joints: #if joints are recorded add in the end
-                    header_row += [ SIDE+"_e0", SIDE+"_e1", SIDE+"_s0", SIDE+"_s1", SIDE+"_w0", SIDE+"_w1", SIDE+"_w2" ]
+                    header_row += [ SIDE+"_s0", SIDE+"_s1", SIDE+"_e0", SIDE+"_e1", SIDE+"_w0", SIDE+"_w1", SIDE+"_w2" ]
                 writer.writerow(header_row)  # Write header
                 writer.writerows(data)  # Write data to the CSV file
             data = []  # Clear the data list
@@ -107,5 +109,5 @@ while not rospy.is_shutdown() and run:
         cv2.putText(img, "Exit", (300,300), cv2.FONT_HERSHEY_SIMPLEX, 1.7, (255,0,0), 3)
 
     robot._set_display_data(cv2.resize(img, (1024,600)))
-sleep(1)
+rospy.sleep(1)
     

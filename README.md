@@ -67,7 +67,8 @@ Some examples are available in the folder to demonstrate some capabilities:
 - ```example_grippers.py``` to use the grippers
 - ```example_ir_arm_distance.py``` for getting the infrared distance between grippen and object
 - ```example_take_pic.py``` for getting the camera video in the hands and to take pictures with the button (useful to create a dataset of images of objects you are working on).
-- ```example_cartesian_space_recorder.py``` to record trajectories in cartesian (task-space) and also joints poistion (joint space). Visualize with ```visualizer_cartesian_trajectories```
+- ```example_cartesian_space_recorder.py``` to record trajectories in cartesian (task-space) and also joints poistion (joint space). Visualize with ```visualizer_cartesian_trajectories.py``` 
+- ```example_cartesian_space_playback.py``` to play trajectories in cartesian (task-space) and also joints poistion (joint space). 
 
 ## Useful Resources & Extra
 ### Face expressions
@@ -89,12 +90,13 @@ face._set_face(robot, "left_down")
 
 - Links
 	- https://robostack.github.io/GettingStarted.html
-	- https://sdk.rethinkrobotics.com/wiki/API_Reference
+	- http://web.archive.org/web/20221007182536/https://sdk.rethinkrobotics.com/wiki/API_Reference
 	- https://sdk.rethinkrobotics.com/wiki/
 	- https://sdk.rethinkrobotics.com/wiki/Foundations
 	- https://sdk.rethinkrobotics.com/wiki/Advanced_Understanding
 	- https://sdk.rethinkrobotics.com/wiki/Examples
 	- https://sdk.rethinkrobotics.com/wiki/Customer_Videos
+	- http://web.archive.org/web/20191118144640/http://api.rethinkrobotics.com/baxter_interface/html/index.html
 	- https://github.com/RethinkRobotics/baxter_common/tree/master/baxter_core_msgs/msg
 	- https://github.com/RethinkRobotics/baxter_interface/tree/master/src/baxter_interface
 - Resources
