@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import argparse
 import rospy
-import baxter
 import numpy as np
 from pynput.keyboard import Key, Listener
+import baxter #here we are importing the baxter.py interface. (cause it's in this same folder, but in your project please clone the repo as submodule and import the interface as described in the readme)
 
 global desired_position
 global desired_orientation

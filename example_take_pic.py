@@ -2,9 +2,9 @@ import time
 from datetime import datetime
 import os
 import rospy
-import baxter
 import cv2
 import numpy as np
+import baxter #here we are importing the baxter.py interface. (cause it's in this same folder, but in your project please clone the repo as submodule and import the interface as described in the readme)
 
 directory="./imgs_saved"
 interval_sec=3
