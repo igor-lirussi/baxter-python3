@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--arm', type=str, default='left', help='Arm: left or right (default: left)')
 parser.add_argument('-r', '--record_rate', type=int, default='100', help='milliseconds (default: 100ms=10Hz) after which another point is recorded, remember the update of robot is 100 Hz, so no lower than 10ms or values may be duplicated')
 parser.add_argument('-f', '--file', type=str, default='data_record', help='the file name to record to or path/to/filename, (default: data_record) You can also omit the extension, they are gonna be saved anyway in .csv')
+parser.add_argument('-l', '--limit', type=int, default='-1', help='limit on points to record (default -1, infinite) Useful to have the same amount of points in different recordings. Stops recording automatically once recorded an amount of points')
 parser.add_argument('-j', '--joints', action='store_true', help='Saves also the 7 joints positions in the last 7 column (joint space) (add this argument to activate)')
 args = parser.parse_args()
 
@@ -77,7 +78,7 @@ while not rospy.is_shutdown() and run:
             data.append(row)  # Append data to the list
             print('.', end='')
         #check button pressed CANCEL_BUTTON
-        if robot._navigator_state.buttons[1] == True:
+        if robot._navigator_state.buttons[1] == True or (args.limit>0 and len(data)>=args.limit) :
             print(f"({len(data)} points, {int(time.time_ns() / 1_000_000)-time_start_record}ms)")
             print("STOP RECORDING")
             record=False
