@@ -283,6 +283,10 @@ class BaxterRobot:
         self._pub_gripper.publish(_command_end_effector)
 
     def gripper_go(self, position=0):
+        if position<0:
+            position=0
+        if position>100
+            position=100
         arguments = json.dumps({"position":position})
         _command_end_effector = EndEffectorCommand()
         _command_end_effector.id =  self._gripper_state.id
