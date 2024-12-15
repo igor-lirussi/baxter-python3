@@ -1,3 +1,8 @@
+"""
+Description: Module to change face of Baxter Robot, requires the interface, import it in your project to show some emotions!
+Author: Igor Lirussi (https://igor-lirussi.github.io)
+"""
+#!/usr/bin/env python3
 import cv2
 
 

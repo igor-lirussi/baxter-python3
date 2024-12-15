@@ -1,9 +1,13 @@
+"""
+Description: Visualize the trajectories recorded in csv.
+Author: Igor Lirussi (https://igor-lirussi.github.io)
+"""
+#!/usr/bin/env python3
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import argparse 
 import os
-#This code is not meant to be executed on Baxter, but on your computer to visualize the trajectories recorded
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--filepath', type=str, default='.', help='the folder (default .) in which look for trajectory files')

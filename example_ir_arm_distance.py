@@ -1,3 +1,8 @@
+"""
+Description: Simple example of how to get the IR distance from the robotic arm of baxter
+Author: Igor Lirussi (https://igor-lirussi.github.io)
+"""
+#!/usr/bin/env python3
 import time
 import rospy
 import cv2

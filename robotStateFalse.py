@@ -1,3 +1,8 @@
+"""
+Description: Puts both hands of the robot in the neutral safe pose and deactivates the engines 
+Author: Igor Lirussi (https://igor-lirussi.github.io)
+"""
+#!/usr/bin/env python3
 import time
 import rospy
 import _thread

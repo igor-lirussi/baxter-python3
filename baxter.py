@@ -1,3 +1,9 @@
+"""
+Description: Interface to code Baxter Robot in Python, import it in your project as described in the README!
+             Each object "BaxterRobot" created with this class represents a robotic hand of Baxer, you can create two.
+Author: Igor Lirussi (https://igor-lirussi.github.io)
+"""
+#!/usr/bin/env python3
 from copy import deepcopy
 
 import rospy

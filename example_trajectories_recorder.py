@@ -1,3 +1,7 @@
+"""
+Description: Records the trajectories of the robot arm(s).
+Author: Igor Lirussi (https://igor-lirussi.github.io)
+"""
 #!/usr/bin/env python3
 import time
 import argparse

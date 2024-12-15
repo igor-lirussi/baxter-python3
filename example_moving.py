@@ -1,3 +1,8 @@
+"""
+Description: Simple example of how to move the robotic arm of baxter
+Author: Igor Lirussi (https://igor-lirussi.github.io)
+"""
+#!/usr/bin/env python3
 import rospy
 import baxter #here we are importing the baxter.py interface. (cause it's in this same folder, but in your project please clone the repo as submodule and import the interface as described in the readme)
 rospy.init_node("example")

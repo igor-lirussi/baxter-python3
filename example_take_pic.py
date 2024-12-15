@@ -1,3 +1,8 @@
+"""
+Description: Shows on robot's face the camera feed from the hand and takes pictures if you press the circle button.
+Author: Igor Lirussi (https://igor-lirussi.github.io)
+"""
+#!/usr/bin/env python3
 import time
 from datetime import datetime
 import os

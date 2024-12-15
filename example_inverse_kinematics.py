@@ -1,3 +1,8 @@
+"""
+Description: Simple example of how to move the robotic arm of baxter in cartesian space with inverse kinematics
+Author: Igor Lirussi (https://igor-lirussi.github.io)
+"""
+#!/usr/bin/env python3
 import time
 import rospy
 import cv2

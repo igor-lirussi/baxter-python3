@@ -1,3 +1,7 @@
+"""
+Description: Simple example of how to move the robotic arm of baxter with keyboard
+Author: Igor Lirussi (https://igor-lirussi.github.io)
+"""
 #!/usr/bin/env python3
 import argparse
 import rospy
