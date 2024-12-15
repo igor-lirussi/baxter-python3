@@ -14,10 +14,10 @@ import baxter #here we are importing the baxter.py interface. (cause it's in thi
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--arm', type=str, default='left', help='Arm: left or right (default: left)')
-parser.add_argument('-f', '--file', type=str, help='the file name to play to or path/filename, it has to be a .csv (1st column: time from 0 in ms, 4th column to 10th: endpoint position and orientation, 11th column: gripper position)')
+parser.add_argument('-f', '--file', type=str, help='the path to the file name to play, it has to be a .csv (1st column: time from 0 in ms, 4th column to 10th: endpoint position and orientation, 11th column: gripper position)')
 parser.add_argument('-r', '--playback_rate', type=int, default='-1', help='milliseconds (default: -1, inferred from data) after which another point is played (es 100ms=10Hz), remember the update of robot is 100 Hz, so no lower than 10ms or values may be duplicated')
-parser.add_argument('-gf', '--grip_on_force', action='store_true', help='Instead of commanding the gripper to a specific position, command the gripper to fully close only when gripper force is positive in the data (12th column) (add this argument to activate)')
-parser.add_argument('-j', '--joints', action='store_true', help='Plays from the 7 joints positions in the last 7 column (columns 13th to 19th) (joint space) instead of the cartesian space (add this argument to activate)')
+parser.add_argument('-gf', '--grip_on_force', action='store_true', help='Instead of commanding the gripper to a specific position, command the gripper to fully close only when gripper force is positive in the data (NEEDS 12th column) (add this argument to activate)')
+parser.add_argument('-j', '--joints', action='store_true', help='Plays from the 7 joints positions in the last 7 column (NEEDS columns 13th to 19th) (joint space) instead of the cartesian space (add this argument to activate)')
 args = parser.parse_args()
 
 SIDE = args.arm

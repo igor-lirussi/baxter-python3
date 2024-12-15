@@ -10,7 +10,7 @@ I suggest to do it from the pc, without ssh into robot and cloning stuff there, 
 (If you ssh in the internal robot computer, it's inside _igor_ folder, remember to activate a ros environment before, es ```source ~/alper_workspace/activate_env.sh``` ) 
 
 Check the options:
-You can specify the arm(s), recording rate, recordings name, and if you want also the joint-space recorded.
+You can specify the arm(s), recording rate, fixed duration, recordings name, and if you want also the joint-space recorded.
 ```
 python example_trajectories_recorder.py --help
 ```

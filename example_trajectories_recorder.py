@@ -1,5 +1,7 @@
 """
-Description: Records the trajectories of the robot arm(s).
+Description: Records the trajectories of the robot arm(s), saves them in CSV. To record also joints angles check the options.
+             The columns are: "Time (milliseconds from 0)","ROS secs","ROS nsecs", pos_x, pos_y, pos_z, quaternion_x, quaternion_y, quaternion_z, quaternion_w, "gripper_position", "gripper_force",
+             (and optionally) "shoulder0", "shoulder1", "elbow0", "elbow1", "wrist0", wrist1", "wrist2"
 Author: Igor Lirussi (https://igor-lirussi.github.io)
 """
 #!/usr/bin/env python3
@@ -15,11 +17,16 @@ import baxter #here we are importing the baxter.py interface. (cause it's in thi
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--arm', type=str, default='left', help='Arm: left or right (default: left)')
 parser.add_argument('-r', '--record_rate', type=int, default='100', help='milliseconds (default: 100ms=10Hz) after which another point is recorded, remember the update of robot is 100 Hz, so no lower than 10ms or values may be duplicated')
-parser.add_argument('-f', '--file', type=str, default='data_record', help='the file name to record to or path/to/filename, (default: data_record) You can also omit the extension, they are gonna be saved anyway in .csv')
-parser.add_argument('-l', '--limit', type=int, default='-1', help='limit on points to record (default -1, infinite) Useful to have the same amount of points in different recordings. Stops recording automatically once recorded an amount of points')
+parser.add_argument('-l', '--limit', type=int, default='-1', help='limit on points to record (default -1, infinite) Useful to have the same amount of points in different recordings to train your model. Stops recording automatically once recorded an amount of points')
 parser.add_argument('-j', '--joints', action='store_true', help='Saves also the 7 joints positions in the last 7 column (joint space) (add this argument to activate)')
+parser.add_argument('-d', '--directory', type=str, default='./trajectories/', help='the directory in which to save the files, default ./trajectories/ used also in the visualizer')
+parser.add_argument('-f', '--file', type=str, default='data_record.csv', help='the file name to record, (default: data_record) You can also omit the extension, they are gonna be saved anyway in .csv')
 args = parser.parse_args()
 
+DIRECTORY=args.directory
+if not os.path.exists(DIRECTORY):
+    os.makedirs(DIRECTORY)
+    print("directory crated ", DIRECTORY)
 SIDE = args.arm
 RECORDRATE=args.record_rate
 FILENAME=args.file
@@ -87,7 +94,7 @@ while not rospy.is_shutdown() and run:
             print("STOP RECORDING")
             record=False
             #save file
-            fullfilename = f"{FILENAME}_{time.strftime('%Y-%m-%d_%H-%M-%S')}.csv"
+            fullfilename = f"{DIRECTORY}{FILENAME}_{time.strftime('%Y-%m-%d_%H-%M-%S')}.csv"
             with open(fullfilename, mode='w', newline='') as file:
                 writer = csv.writer(file)
                 header_row=["Time","ROS secs","ROS nsecs", "________p_x________", "________p_y________", "________p_z________", "________q_x________", "________q_y________", "________q_z________", "________q_w________", "gripper_position", "gripper_force"]

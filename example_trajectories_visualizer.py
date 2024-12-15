@@ -1,5 +1,7 @@
 """
-Description: Visualize the trajectories recorded in csv.
+Description: Visualize in 3D the trajectories recorded in csv. 
+             During time (COLUMN 1st) is shown the position of the hand (COLUMN 4th to 10th). Included the gripper open/closed (COLUMN 11th).
+             If there is joint data, (COLUMNS 13th to 19th), it also visualizes that in 7 graphs.
 Author: Igor Lirussi (https://igor-lirussi.github.io)
 """
 #!/usr/bin/env python3
@@ -10,19 +12,28 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-f', '--filepath', type=str, default='.', help='the folder (default .) in which look for trajectory files')
-parser.add_argument('-cs', '--cartesianspace', action='store_true', help='Visualizes 7 graphs for each dimension of cartesian space (3D position + 4D quaternion) (if the is also joint space data, has precedence over joint space graphs) (add this argument to activate)')
+parser.add_argument('-f', '--filepath', type=str, default='./trajectories/', help='the folder (default ./trajectories/) in which look for trajectory files, a single file can also be passed')
+parser.add_argument('-cs', '--cartesianspace', action='store_true', help='Shows 7 graphs for each dimension of cartesian space in time (3D position + 4D quaternion). Overrides joint space graphs if present.')
 args = parser.parse_args()
 
-folder_path = args.filepath
+path_provided = args.filepath
+
+files=[]
+if os.path.isfile(path_provided) and path_provided.endswith('.csv'):
+    files.append(path_provided)
+elif os.path.isdir(path_provided):
+    for filename in os.listdir(path_provided):
+        if filename.endswith('.csv'):
+            files.append(os.path.join(path_provided, filename))
+else:
+    print("Invalid path provided. It is neither a file.csv nor a directory.")
 
 arrays = []
-for filename in os.listdir(folder_path):
+for filename in files:
     if filename.endswith('.csv'):
-        file_path = os.path.join(folder_path, filename)
-        print("loading "+file_path)
+        print("Loaded: "+filename)
         # Use numpy to load the CSV file into an array
-        data = np.genfromtxt(file_path, delimiter=',', skip_header=1)
+        data = np.genfromtxt(filename, delimiter=',', skip_header=1)
         arrays.append(data)
 
         # Extract the columns
@@ -35,7 +46,7 @@ for filename in os.listdir(folder_path):
         qw_column = data[:, 9]
         gripper_position_column = data[:, 10]
 
-        fig = plt.figure(figsize=(9,7), num=filename)
+        fig = plt.figure(figsize=(9,7), num=os.path.basename(filename))
 
         span=4 #default the main plot covers all space
 
