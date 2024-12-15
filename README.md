@@ -63,14 +63,14 @@ check the examples for more.
 ### Examples
 Some examples are available in the folder to demonstrate some capabilities:
 - ```robotStateFalse.py``` to put both arms in normal position and deactivate the motors
-- ```example_moving.py``` for moving the joints
-- ```example_inverse_kinematics.py``` for moving the joints given a target point
+- ```example_arm_moving.py``` for moving the joints
+- ```example_inverse_kinematics.py``` for moving the joints given a target point with inverse kinematics
 - ```example_joystick_keyboard.py``` for moving the robot with keyboard, given a target point
 - ```example_grippers.py``` to use the grippers
-- ```example_ir_arm_distance.py``` for getting the infrared distance between grippen and object
-- ```example_take_pic.py``` for getting the camera video in the hands and to take pictures with the button (useful to create a dataset of images of objects you are working on).
-- ```example_cartesian_space_recorder.py``` to record trajectories in cartesian (task-space) and also joints poistion (joint space). Visualize with ```visualizer_cartesian_trajectories.py``` 
-- ```example_cartesian_space_playback.py``` to play trajectories in cartesian (task-space) and also joints poistion (joint space). 
+- ```example_ir_arm_distance.py``` for getting the infrared distance between gripper and object
+- ```example_pics_arm.py``` for getting the camera video in the hands and to take pictures with the button (useful to create a dataset of images of objects you are working on).
+- ```example_trajectories_recorder.py``` to record trajectories in cartesian (task-space) and also joints poistion (joint space). Visualize with ```example_trajectories_visualizer.py```. Check the TUTORIAL_TRAJECTORIES.md for more.
+- ```example_trajectories_playback.py``` to play trajectories in cartesian (task-space) and also joints poistion (joint space). Check the TUTORIAL_TRAJECTORIES.md for more.
 
 ## Useful Resources & Extra
 ### Face expressions
