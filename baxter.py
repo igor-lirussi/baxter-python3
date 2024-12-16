@@ -87,6 +87,9 @@ class BaxterRobot:
         self._pub_robot_state.publish(msg)
 
     def set_cartesian_position(self, position, orientation, override_current_movement=False):
+        """
+        THIS METHOD IS BLOCKING TILL THE ROBOT REACHES THE POSITION, use override_current_movement=True for the NON BLOCKING
+        """
         hdr = Header(stamp=rospy.Time.now(), frame_id="base")
         msg = PoseStamped(
             header=hdr,
@@ -140,12 +143,14 @@ class BaxterRobot:
         self._pub_joint_cmd.publish(self._command_msg)
 
     def move_to_joint_position(self, positions, timeout=15.0):
+        """
+        THIS METHOD IS BLOCKING, TILL THE ROBOT REACHES THE POSITION, use set_joint_position for the NON BLOCKING
+        """
         current_angle = self.joint_angle()
         end_time = rospy.get_time() + timeout
         
         # update the target based on the current location
-        # if you use this instead of positions, the jerk
-        # will be smaller.
+        # if you use this instead of positions, the jerk will be smaller.
         def current_target():
             for joint in positions:
                 current_angle[joint] = 0.012488 * positions[joint] + 0.98751 * current_angle[joint]
@@ -156,7 +161,7 @@ class BaxterRobot:
             for joint in positions:
                 diffs.append(abs(positions[joint] - self._joint_angle[joint]))
             return diffs
-
+        # sleep till position is reached
         while any(diff > 0.008726646 for diff in difference()) and rospy.get_time() < end_time:
             self.set_joint_position(current_target())
             self.rate.sleep()
