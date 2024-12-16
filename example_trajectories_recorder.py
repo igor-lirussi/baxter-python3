@@ -2,6 +2,7 @@
 Description: Records the trajectories of the robot arm(s), saves them in CSV. To record also joints angles check the options.
              The columns are: "Time (milliseconds from 0)","ROS secs","ROS nsecs", pos_x, pos_y, pos_z, quaternion_x, quaternion_y, quaternion_z, quaternion_w, "gripper_position", "gripper_force",
              (and optionally) "shoulder0", "shoulder1", "elbow0", "elbow1", "wrist0", wrist1", "wrist2"
+             (if both arms is selected, the columns of the right arm are added on the right, mantaining the same order. e.g. += (3D position, 4D quaternion, gripper position, girpper force) (optionally: += 7D joints)
 Author: Igor Lirussi (https://igor-lirussi.github.io)
 """
 #!/usr/bin/env python3
@@ -39,6 +40,8 @@ if SIDE=="both":
     both_arms=True
     SIDE="left" #to create the first as normal
     print("ATTENTION: BOTH arms selected")
+if args.joints:
+    print("ATTENTION: JOINTS also recorded")
 
 LAST_TIME=int(time.time_ns() / 1_000_000)
 WIDTH = 960
@@ -60,7 +63,7 @@ rospy.sleep(4.0)
 string = "Calibrated: {} Ready: {} Moving: {} Gripping: {}".format(robot._gripper_state.calibrated, robot._gripper_state.ready, robot._gripper_state.moving, robot._gripper_state.gripping)
 print(string)
 if both_arms:
-    print('Initialize gripper')
+    print('Initialize gripper right arm')
     robot_r.gripper_calibrate()
     rospy.sleep(4.0)
     string = "Calibrated: {} Ready: {} Moving: {} Gripping: {}".format(robot_r._gripper_state.calibrated, robot_r._gripper_state.ready, robot_r._gripper_state.moving, robot_r._gripper_state.gripping)
@@ -72,7 +75,7 @@ print('Current Position    x:%.2f y:%.2f z:%.2f'%(p.x,p.y,p.z))
 q = robot._endpoint_state.pose.orientation
 print('Current Orientation x:%.2f y:%.2f z:%.2f w:%.2f'%(q.x,q.y,q.z,q.w))
 if both_arms:
-    print('Get robot pose:')
+    print('Get robot right arm pose:')
     p = robot_r._endpoint_state.pose.position
     print('Current Position    x:%.2f y:%.2f z:%.2f'%(p.x,p.y,p.z))
     q = robot_r._endpoint_state.pose.orientation
