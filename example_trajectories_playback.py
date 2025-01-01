@@ -21,14 +21,14 @@ import baxter #here we are importing the baxter.py interface. (cause it's in thi
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--arm', type=str, default='left', help='Arm: left or right (default: left) or both')
 parser.add_argument('-f', '--file', type=str, help='the path to the file name to play, it has to be a .csv (1st COLUMN: time from 0 in ms, COLUMNS 4th to 10th: endpoint position and orientation, 11th COLUMN: gripper position)')
-parser.add_argument('-r', '--playback_rate', type=int, default='-1', help='milliseconds (default: -1, inferred from data) after which another point is played (es 100ms=10Hz), remember the update of robot is 100 Hz, so no lower than 10ms or values may be duplicated')
+parser.add_argument('-r', '--playback_interval', type=int, default='-1', help='milliseconds (default: -1, inferred from data) after which another point is played (es 100ms=10Hz), remember the update of robot is 100 Hz, so no lower than 10ms or values may be duplicated')
 parser.add_argument('-gf', '--grip_on_force', action='store_true', help='Instead of commanding the gripper to a specific position, command the gripper to fully close only when gripper force is positive in the data (NEEDS 12th COLUMN) (add this argument to activate)')
 parser.add_argument('-j', '--joints', action='store_true', help='Plays from the 7 joints positions (NEEDS COLUMNS 13th to 19th) (joint space) instead of the cartesian space (add this argument to activate)')
 args = parser.parse_args()
 
 SIDE = args.arm
 FILENAME=args.file
-PLAYBACKRATE=args.playback_rate
+PLAYBACKRATE=args.playback_interval
 
 print("Loading file "+FILENAME)
 if os.path.isfile(FILENAME) and FILENAME.endswith('.csv'):
@@ -70,9 +70,9 @@ if SIDE=="both":
 
 
 if PLAYBACKRATE==-1:
-    print("Inferring playback rate....")
+    print("Inferring playback interval....")
     PLAYBACKRATE=(data[-1,0]-data[0,0])/len(data)
-print('Playback Rate: {}'.format(PLAYBACKRATE))
+print('Playback Interval: {}'.format(PLAYBACKRATE))
 
 print('Initialize robot')
 rospy.init_node("Playback")

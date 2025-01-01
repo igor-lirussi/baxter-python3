@@ -18,7 +18,7 @@ import baxter #here we are importing the baxter.py interface. (cause it's in thi
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--arm', type=str, default='left', help='Arm: left or right (default: left) or both')
-parser.add_argument('-r', '--record_rate', type=int, default='100', help='milliseconds (default: 100ms=10Hz) between recorded points, remember the update of robot is (10ms=100Hz), so no lower than 10ms or values may be duplicated')
+parser.add_argument('-r', '--record_interval', type=int, default='100', help='milliseconds (default: 100ms=10Hz) between recorded points, remember the update of robot is (10ms=100Hz), so no lower than 10ms or values may be duplicated')
 parser.add_argument('-l', '--limit', type=int, default='-1', help='limit on points to record (default -1, infinite) Useful to have the same amount of points in different recordings to train your model. Stops recording automatically once recorded an amount of points')
 parser.add_argument('-j', '--joints', action='store_true', help='Saves also the 7 joints positions (in COLUMNS 13th to 19th) (joint space) (add this argument to activate)')
 parser.add_argument('-d', '--directory', type=str, default='./trajectories/', help='the directory in which to save the files, default ./trajectories/ used also in the visualizer')
@@ -30,7 +30,7 @@ if not os.path.exists(DIRECTORY):
     os.makedirs(DIRECTORY)
     print("directory crated ", DIRECTORY)
 SIDE = args.arm
-RECORDRATE=args.record_rate
+RECORDRATE=args.record_interval
 FILENAME=args.file
 if FILENAME.endswith('.csv'):
     FILENAME = FILENAME[:-4]
